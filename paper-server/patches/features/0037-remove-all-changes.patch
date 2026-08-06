@@ -1,0 +1,18 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Karven <karven@atomicmail.io>
+Date: Thu, 6 Aug 2026 13:12:28 +0700
+Subject: [PATCH] remove all changes
+
+
+diff --git a/net/minecraft/world/inventory/InventoryMenu.java b/net/minecraft/world/inventory/InventoryMenu.java
+index bc59445a05be6bfe2544ec9a062dd0e28015e9dd..10aa3b1cd8fe19af1ab88a93bd4e8f104b8e4219 100644
+--- a/net/minecraft/world/inventory/InventoryMenu.java
++++ b/net/minecraft/world/inventory/InventoryMenu.java
+@@ -211,7 +211,6 @@ public class InventoryMenu extends AbstractCraftingMenu {
+         // Otherwise, only resync the hand slot
+         final int slot = hand == net.minecraft.world.InteractionHand.MAIN_HAND ? this.owner.getInventory().getSelectedSlot() : Inventory.SLOT_OFFHAND;
+         this.forceSlot(this.owner.getInventory(), slot);
+-        throw new RuntimeException("slot updated"); // Karven - throw exception on held slot update
+     }
+ 
+     @Override

@@ -1,0 +1,26 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Karven <karven@atomicmail.io>
+Date: Thu, 6 Aug 2026 12:50:04 +0700
+Subject: [PATCH] add debug log
+
+
+diff --git a/net/minecraft/world/inventory/InventoryMenu.java b/net/minecraft/world/inventory/InventoryMenu.java
+index 10aa3b1cd8fe19af1ab88a93bd4e8f104b8e4219..7a504b015b1abca9de971522332d0df86be2e9bc 100644
+--- a/net/minecraft/world/inventory/InventoryMenu.java
++++ b/net/minecraft/world/inventory/InventoryMenu.java
+@@ -42,6 +42,7 @@ public class InventoryMenu extends AbstractCraftingMenu {
+         EMPTY_ARMOR_SLOT_HELMET
+     );
+     private static final EquipmentSlot[] SLOT_IDS = new EquipmentSlot[]{EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
++    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(net.minecraft.world.inventory.InventoryMenu.class);
+     public final boolean active;
+     private final Player owner;
+     private org.bukkit.craftbukkit.inventory.@org.jspecify.annotations.Nullable CraftInventoryView view = null; // CraftBukkit
+@@ -211,6 +212,7 @@ public class InventoryMenu extends AbstractCraftingMenu {
+         // Otherwise, only resync the hand slot
+         final int slot = hand == net.minecraft.world.InteractionHand.MAIN_HAND ? this.owner.getInventory().getSelectedSlot() : Inventory.SLOT_OFFHAND;
+         this.forceSlot(this.owner.getInventory(), slot);
++        log.error("slot changed", new RuntimeException()); // Karven - Add debug log
+     }
+ 
+     @Override

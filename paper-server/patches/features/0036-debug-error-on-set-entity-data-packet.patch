@@ -1,0 +1,35 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Karven <karven@atomicmail.io>
+Date: Tue, 29 Sep 2026 22:28:07 +0700
+Subject: [PATCH] debug: error on set entity data packet
+
+
+diff --git a/net/minecraft/server/level/ChunkMap.java b/net/minecraft/server/level/ChunkMap.java
+index fd0b9f20fbdd523d51550fd6009b5011e6e7e6e6..35fffa15231cca64c01f1431e130d39aca0b859c 100644
+--- a/net/minecraft/server/level/ChunkMap.java
++++ b/net/minecraft/server/level/ChunkMap.java
+@@ -1378,6 +1378,12 @@ public class ChunkMap extends SimpleRegionStorage implements ChunkHolder.PlayerP
+             if (this.entity instanceof ServerPlayer player) {
+                 player.connection.send(packet);
+             }
++
++            // Karven start - debug set entity data packet
++            if (packet instanceof net.minecraft.network.protocol.game.ClientboundSetEntityDataPacket) {
++                throw new RuntimeException("Sent entity data");
++            }
++            // Karven end - debug set entity data packet
+         }
+ 
+         @Override
+diff --git a/net/minecraft/server/level/ServerEntity.java b/net/minecraft/server/level/ServerEntity.java
+index e46f95b19da1c14f240ec6697f22b5e220e0a835..1a4fda29b95458a7bea5222afb914a8c60c901d5 100644
+--- a/net/minecraft/server/level/ServerEntity.java
++++ b/net/minecraft/server/level/ServerEntity.java
+@@ -366,6 +366,7 @@ public class ServerEntity {
+         broadcast.accept(packet);
+         if (this.trackedDataValues != null) {
+             broadcast.accept(new ClientboundSetEntityDataPacket(this.entity.getId(), this.trackedDataValues));
++            LOGGER.error("sendPairingData: ", new RuntimeException("Sent set entity data")); // Karven - debug set entity data
+         }
+ 
+         if (this.entity instanceof LivingEntity livingEntity) {

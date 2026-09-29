@@ -1,0 +1,19 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Karven <karven@atomicmail.io>
+Date: Tue, 29 Sep 2026 22:35:05 +0700
+Subject: [PATCH] debug: log error instead of throwing
+
+
+diff --git a/net/minecraft/server/level/ChunkMap.java b/net/minecraft/server/level/ChunkMap.java
+index 35fffa15231cca64c01f1431e130d39aca0b859c..f41f6485ed85f562fc99dec6e35421cecf835dab 100644
+--- a/net/minecraft/server/level/ChunkMap.java
++++ b/net/minecraft/server/level/ChunkMap.java
+@@ -1381,7 +1381,7 @@ public class ChunkMap extends SimpleRegionStorage implements ChunkHolder.PlayerP
+ 
+             // Karven start - debug set entity data packet
+             if (packet instanceof net.minecraft.network.protocol.game.ClientboundSetEntityDataPacket) {
+-                throw new RuntimeException("Sent entity data");
++                LOGGER.error("Debug", new RuntimeException("Sent entity data"));
+             }
+             // Karven end - debug set entity data packet
+         }
